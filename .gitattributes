@@ -1,0 +1,4 @@
+# emd sources: no line ending conversion, every code point counts.
+*.emd -text
+# Byte-exact test fixtures.
+tests/conformance/* -text
