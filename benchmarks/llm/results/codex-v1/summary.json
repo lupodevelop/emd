@@ -1,0 +1,370 @@
+{
+  "answers": 573,
+  "cost_usd": null,
+  "by_model_condition": {
+    "gpt-6-luna/bare": {
+      "n": 67,
+      "clean": 18,
+      "wrapped": 0,
+      "layout": 0,
+      "wrong": 49,
+      "programs": 33,
+      "compiled": 7,
+      "compiles_pct": 21.21212121212121,
+      "compiles_ci": [
+        10.676021475084825,
+        37.75164513491988
+      ],
+      "strict_pct": 26.865671641791046,
+      "strict_ci": [
+        17.72220485248716,
+        38.51810909708225
+      ],
+      "unwrapped_pct": 26.865671641791046,
+      "unwrapped_ci": [
+        17.72220485248716,
+        38.51810909708225
+      ],
+      "content_pct": 26.865671641791046,
+      "content_ci": [
+        17.72220485248716,
+        38.51810909708225
+      ],
+      "format_loss_pct": 0.0,
+      "format_loss_ci": [
+        0.0,
+        17.587922593328436
+      ],
+      "cost_usd": null,
+      "cost_per_answer": null,
+      "cost_per_clean": null,
+      "tokens": 36155
+    },
+    "gpt-6-luna/explicit": {
+      "n": 16,
+      "clean": 3,
+      "wrapped": 0,
+      "layout": 0,
+      "wrong": 13,
+      "programs": 7,
+      "compiled": 3,
+      "compiles_pct": 42.857142857142854,
+      "compiles_ci": [
+        15.821985399244538,
+        74.95416372469643
+      ],
+      "strict_pct": 18.75,
+      "strict_ci": [
+        6.591599019788684,
+        43.00888116754912
+      ],
+      "unwrapped_pct": 18.75,
+      "unwrapped_ci": [
+        6.591599019788684,
+        43.00888116754912
+      ],
+      "content_pct": 18.75,
+      "content_ci": [
+        6.591599019788684,
+        43.00888116754912
+      ],
+      "format_loss_pct": 0.0,
+      "format_loss_ci": [
+        0.0,
+        56.149703563931965
+      ],
+      "cost_usd": null,
+      "cost_per_answer": null,
+      "cost_per_clean": null,
+      "tokens": 5532
+    },
+    "gpt-6-luna/schema": {
+      "n": 80,
+      "clean": 29,
+      "wrapped": 0,
+      "layout": 1,
+      "wrong": 50,
+      "programs": 46,
+      "compiled": 14,
+      "compiles_pct": 30.434782608695652,
+      "compiles_ci": [
+        19.079840729794974,
+        44.80564656529128
+      ],
+      "strict_pct": 36.25,
+      "strict_ci": [
+        26.57079299605085,
+        47.189205585142815
+      ],
+      "unwrapped_pct": 36.25,
+      "unwrapped_ci": [
+        26.57079299605085,
+        47.189205585142815
+      ],
+      "content_pct": 37.5,
+      "content_ci": [
+        27.694178631800742,
+        48.45127462382987
+      ],
+      "format_loss_pct": 3.3333333333333335,
+      "format_loss_ci": [
+        0.5908590316197979,
+        16.670391146115726
+      ],
+      "cost_usd": null,
+      "cost_per_answer": null,
+      "cost_per_clean": null,
+      "tokens": 64546
+    },
+    "gpt-6.1-sol/bare": {
+      "n": 147,
+      "clean": 145,
+      "wrapped": 0,
+      "layout": 0,
+      "wrong": 2,
+      "programs": 72,
+      "compiled": 72,
+      "compiles_pct": 100.0,
+      "compiles_ci": [
+        94.93488266449555,
+        99.99999999999997
+      ],
+      "strict_pct": 98.63945578231292,
+      "strict_ci": [
+        95.17542950244521,
+        99.62609327554195
+      ],
+      "unwrapped_pct": 98.63945578231292,
+      "unwrapped_ci": [
+        95.17542950244521,
+        99.62609327554195
+      ],
+      "content_pct": 98.63945578231292,
+      "content_ci": [
+        95.17542950244521,
+        99.62609327554195
+      ],
+      "format_loss_pct": 0.0,
+      "format_loss_ci": [
+        0.0,
+        2.580906496193134
+      ],
+      "cost_usd": null,
+      "cost_per_answer": null,
+      "cost_per_clean": null,
+      "tokens": 69949
+    },
+    "gpt-6.1-sol/explicit": {
+      "n": 147,
+      "clean": 147,
+      "wrapped": 0,
+      "layout": 0,
+      "wrong": 0,
+      "programs": 72,
+      "compiled": 72,
+      "compiles_pct": 100.0,
+      "compiles_ci": [
+        94.93488266449555,
+        99.99999999999997
+      ],
+      "strict_pct": 100.0,
+      "strict_ci": [
+        97.4533136249239,
+        100.0
+      ],
+      "unwrapped_pct": 100.0,
+      "unwrapped_ci": [
+        97.4533136249239,
+        100.0
+      ],
+      "content_pct": 100.0,
+      "content_ci": [
+        97.4533136249239,
+        100.0
+      ],
+      "format_loss_pct": 0.0,
+      "format_loss_ci": [
+        0.0,
+        2.5466863750761113
+      ],
+      "cost_usd": null,
+      "cost_per_answer": null,
+      "cost_per_clean": null,
+      "tokens": 67783
+    },
+    "gpt-6.1-sol/schema": {
+      "n": 116,
+      "clean": 116,
+      "wrapped": 0,
+      "layout": 0,
+      "wrong": 0,
+      "programs": 57,
+      "compiled": 57,
+      "compiles_pct": 100.0,
+      "compiles_ci": [
+        93.68611642138491,
+        100.0
+      ],
+      "strict_pct": 100.0,
+      "strict_ci": [
+        96.79454930108871,
+        100.0
+      ],
+      "unwrapped_pct": 100.0,
+      "unwrapped_ci": [
+        96.79454930108871,
+        100.0
+      ],
+      "content_pct": 100.0,
+      "content_ci": [
+        96.79454930108871,
+        100.0
+      ],
+      "format_loss_pct": 0.0,
+      "format_loss_ci": [
+        0.0,
+        3.2054506989113003
+      ],
+      "cost_usd": null,
+      "cost_per_answer": null,
+      "cost_per_clean": null,
+      "tokens": 50530
+    }
+  },
+  "coverage": {
+    "gpt-6-luna.bare.jsonl": {
+      "answers": 67,
+      "sha256": "981620d03d95bf7fb503e644e09887eb0a147d8bbaa53c30e08eca17ba617f4d"
+    },
+    "gpt-6-luna.explicit.jsonl": {
+      "answers": 16,
+      "sha256": "ae80d79952737e3e193fb42f5cff7b00f70c9c842f4240300ec5a0719a575571"
+    },
+    "gpt-6-luna.schema.jsonl": {
+      "answers": 80,
+      "sha256": "616ab64a0152a50e8b23e8722bf5df018c338d468cef8c60f253f58ea472cfb9"
+    },
+    "gpt-6.1-sol.bare.jsonl": {
+      "answers": 147,
+      "sha256": "d7770912a994d6e2445b6b04d9a4a6398fd810fec1c1d571e3dc4f1e671a6982"
+    },
+    "gpt-6.1-sol.explicit.jsonl": {
+      "answers": 147,
+      "sha256": "0a7ad4b2285dda555b3020cbdc5e8d8828bff44330f8ca7f7ff51f787a2447d8"
+    },
+    "gpt-6.1-sol.schema.jsonl": {
+      "answers": 116,
+      "sha256": "367bac3f3ae31bc911385a829b8068a905ad495bb9a91190e75097fcf38b4902"
+    }
+  },
+  "billing": {
+    "basis": "Illustrative API-equivalent Standard short-context text-token cost for completed CLI responses, not invoiced subscription expenditure. Unreported failed/aborted usage excluded.",
+    "source": "https://developers.openai.com/api/docs/pricing",
+    "usd_per_million_tokens": {
+      "gpt-6-luna": {
+        "input": 0.1,
+        "cached_input": 0.01,
+        "output": 0.5
+      },
+      "gpt-6.1-sol": {
+        "input": 2.0,
+        "cached_input": 0.1,
+        "output": 10.0
+      }
+    },
+    "formula": "((input_tokens-cached_input_tokens)*input_rate + cached_input_tokens*cached_rate + output_tokens*output_rate)/1e6",
+    "reasoning": "Uses reported output_tokens once; reasoning_output_tokens is not added again.",
+    "by_model_condition": {
+      "gpt-6-luna/bare": {
+        "usage": {
+          "input_tokens": 597430,
+          "cached_input_tokens": 246272,
+          "output_tokens": 36155,
+          "reasoning_output_tokens": 13398
+        },
+        "api_equivalent_usd": 0.05565602000000001,
+        "api_equivalent_per_strict_success_usd": 0.0030920011111111117
+      },
+      "gpt-6-luna/explicit": {
+        "usage": {
+          "input_tokens": 140144,
+          "cached_input_tokens": 53504,
+          "output_tokens": 5532,
+          "reasoning_output_tokens": 2719
+        },
+        "api_equivalent_usd": 0.01196504,
+        "api_equivalent_per_strict_success_usd": 0.003988346666666667
+      },
+      "gpt-6-luna/schema": {
+        "usage": {
+          "input_tokens": 938511,
+          "cached_input_tokens": 546304,
+          "output_tokens": 64546,
+          "reasoning_output_tokens": 36517
+        },
+        "api_equivalent_usd": 0.07695674000000001,
+        "api_equivalent_per_strict_success_usd": 0.0026536806896551727
+      },
+      "gpt-6-luna/plain": {
+        "usage": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "api_equivalent_usd": null,
+        "api_equivalent_per_strict_success_usd": null
+      },
+      "gpt-6.1-sol/bare": {
+        "usage": {
+          "input_tokens": 1829360,
+          "cached_input_tokens": 1006464,
+          "output_tokens": 69949,
+          "reasoning_output_tokens": 19552
+        },
+        "api_equivalent_usd": 2.4459284000000014,
+        "api_equivalent_per_strict_success_usd": 0.01686847172413794
+      },
+      "gpt-6.1-sol/explicit": {
+        "usage": {
+          "input_tokens": 1762903,
+          "cached_input_tokens": 1340800,
+          "output_tokens": 67783,
+          "reasoning_output_tokens": 21465
+        },
+        "api_equivalent_usd": 1.6561160000000001,
+        "api_equivalent_per_strict_success_usd": 0.011266095238095238
+      },
+      "gpt-6.1-sol/schema": {
+        "usage": {
+          "input_tokens": 1339448,
+          "cached_input_tokens": 781696,
+          "output_tokens": 50530,
+          "reasoning_output_tokens": 16747
+        },
+        "api_equivalent_usd": 1.6989735999999998,
+        "api_equivalent_per_strict_success_usd": 0.014646324137931032
+      },
+      "gpt-6.1-sol/plain": {
+        "usage": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "api_equivalent_usd": null,
+        "api_equivalent_per_strict_success_usd": null
+      }
+    },
+    "total_api_equivalent_usd": 5.945595800000001
+  },
+  "sol_bare_explicit": {
+    "paired_answers": 147,
+    "only_bare": 0,
+    "only_explicit": 2,
+    "exact_mcnemar_p": 0.5,
+    "tasks_better": 1,
+    "tasks_worse": 0,
+    "task_level_sign_p": 1.0
+  }
+}

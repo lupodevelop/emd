@@ -31,3 +31,5 @@ __pycache__/
 
 /benchmarks/llm/report/*
 !/benchmarks/llm/report/experiment.pdf
+
+/benchmarks/llm/results/*/tables/
