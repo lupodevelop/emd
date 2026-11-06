@@ -1,0 +1,110 @@
+name: Extended verification
+
+# Explicitly requested, never on every push: these checks can take hours.
+on:
+  workflow_dispatch:
+    inputs:
+      check:
+        description: Evidence to reproduce
+        type: choice
+        required: true
+        default: coverage
+        options: [coverage, rocq, mutants, kani]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: extended-${{ github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CARGO_BUILD_JOBS: '2'
+
+jobs:
+  models:
+    if: inputs.check != 'kani'
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.14'
+      - name: Install Rust and LLVM instrumentation
+        run: rustup toolchain install stable --profile minimal --component llvm-tools-preview
+      - uses: leanprover/lean-action@fe408643ea7367d8c0404a8be3975bb145f5fb64 # v1.7.0
+        with:
+          lake-package-directory: formal/lean
+          auto-config: 'false'
+          build: 'true'
+      - uses: ocaml/setup-ocaml@ff66428f72b64472e749b22e0ad4dded4b2ddca6 # v3.9.1
+        with:
+          ocaml-compiler: '4.14.2'
+      - name: Build Rocq 9.3 model and extracted interpreter; audit axioms
+        run: |
+          opam install -y rocq-core.9.3.0 rocq-stdlib.9.2.0 ocamlfind
+          opam exec -- sh formal/rocq/build.sh
+          opam exec -- python scripts/axioms.py
+      - name: Reproduce requested evidence
+        env:
+          CHECK: ${{ inputs.check }}
+          EMD_REQUIRE_LEAN: '1'
+          EMD_REQUIRE_ROCQ: '1'
+          EMD_REQUIRE_CC: '1'
+        run: |
+          case "$CHECK" in
+            rocq) opam exec -- cargo +stable test --locked --workspace 2>&1 | tee verification.log ;;
+            mutants) opam exec -- python scripts/mutants.py 2>&1 | tee verification.log ;;
+            coverage)
+              cargo +stable install --locked cargo-llvm-cov --version 0.9.1
+              opam exec -- cargo +stable llvm-cov --locked --workspace --ignore-filename-regex '(tests/|/tests\.rs|/oracle\.rs|/verification\.rs)' --lcov --output-path coverage.lcov 2>&1 | tee verification.log
+              ;;
+          esac
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: verification-${{ inputs.check }}
+          path: |
+            verification.log
+            coverage.lcov
+          if-no-files-found: warn
+          retention-days: 14
+
+  kani:
+    if: inputs.check == 'kani'
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.14'
+      - name: Install Kani 0.68.0
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustup default stable
+          cargo install --locked kani-verifier --version 0.68.0
+          cargo kani setup
+      - name: Verify Rust harnesses sequentially and test injected bugs
+        run: |
+          cargo kani -p emd-core 2>&1 | tee kani-core.log
+          cargo kani -p emd-parser 2>&1 | tee kani-parser.log
+          cargo kani -p emd-vm 2>&1 | tee kani-vm.log
+          cargo kani -p emd-asm 2>&1 | tee kani-asm.log
+          python scripts/kani-bugs.py 2>&1 | tee kani-bugs.log
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: verification-kani
+          path: kani-*.log
+          if-no-files-found: warn
+          retention-days: 14

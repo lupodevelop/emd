@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref_type != 'tag' }}
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_BUILD_JOBS: '2'
+
+jobs:
+  quality:
+    name: Format and clippy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.14'
+      - name: Install current stable Rust
+        run: rustup toolchain install stable --profile minimal --component rustfmt,clippy
+      - run: cargo +stable fmt --all --check
+      - run: cargo +stable clippy --locked --workspace --all-targets -- -D warnings
+      - name: Check Python syntax
+        run: python -m compileall -q scripts .github benchmarks/llm website/test editors/nvim/test
+
+  test:
+    name: Rust, Lean comparisons and Neovim
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      EMD_REQUIRE_LEAN: '1'
+      EMD_REQUIRE_CC: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.14'
+      - name: Install current stable Rust
+        run: rustup toolchain install stable --profile minimal
+      - name: Check Lean proofs and build comparison executables
+        uses: leanprover/lean-action@fe408643ea7367d8c0404a8be3975bb145f5fb64 # v1.7.0
+        with:
+          lake-package-directory: formal/lean
+          auto-config: 'false'
+          build: 'true'
+      - name: Tests with Lean and C comparisons required
+        run: cargo +stable test --locked --workspace
+      - name: Build CLI for scorer and editor tests
+        run: cargo +stable build --locked -p emd-cli
+      - name: Check benchmark scorer (no model calls)
+        run: python benchmarks/llm/selftest.py
+      - name: Install Neovim 0.12.6
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download v0.12.6 --repo neovim/neovim --pattern nvim-linux-x86_64.tar.gz --dir "$RUNNER_TEMP/nvim"
+          tar -xzf "$RUNNER_TEMP/nvim/nvim-linux-x86_64.tar.gz" -C "$RUNNER_TEMP/nvim"
+          echo "$RUNNER_TEMP/nvim/nvim-linux-x86_64/bin" >> "$GITHUB_PATH"
+      - name: Neovim plugin and unsaved-buffer regressions
+        env:
+          EMD_BIN: ${{ github.workspace }}/target/debug/emd
+        run: |
+          nvim --headless -n -u NONE -i NONE --cmd 'set rtp^=editors/nvim' -c 'luafile editors/nvim/test/main.lua'
+          nvim --headless -n -u NONE -i NONE --cmd 'set rtp^=editors/nvim' -c 'luafile editors/nvim/test/studio_buffer.lua'
