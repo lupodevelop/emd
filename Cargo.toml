@@ -1,0 +1,20 @@
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+publish = false
+license = "MIT"
+repository = "https://github.com/lupodevelop/emd"
+
+[workspace.lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(kani)'] }
+
+# The analyzer runs large fixed points in tests, and the VM runs the compiler written in emd.
+[profile.dev.package.emd-analyze]
+opt-level = 2
+
+[profile.dev.package.emd-vm]
+opt-level = 2

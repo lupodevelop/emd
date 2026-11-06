@@ -1,0 +1,23 @@
+[package]
+name = "emd-cli"
+description = "The emd command line"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "emd"
+path = "src/main.rs"
+
+[dependencies]
+emd-analyze = { path = "../emd-analyze" }
+emd-asm = { path = "../emd-asm" }
+emd-c = { path = "../emd-c" }
+emd-core = { path = "../emd-core" }
+emd-parser = { path = "../emd-parser" }
+emd-vm = { path = "../emd-vm" }
+emd-tools = { path = "../emd-tools" }
+
+[lints]
+workspace = true

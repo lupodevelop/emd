@@ -1,0 +1,10 @@
+[package]
+name = "emd-core"
+description = "Alphabet, instructions and shared types of emd"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,17 @@
+[package]
+name = "emd-asm"
+description = "Compiler from readable emd assembly to Unicode dashes"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[dependencies]
+emd-core = { path = "../emd-core" }
+
+[dev-dependencies]
+emd-parser = { path = "../emd-parser" }
+emd-vm = { path = "../emd-vm" }
+
+[lints]
+workspace = true

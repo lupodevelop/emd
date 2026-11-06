@@ -1,0 +1,13 @@
+[package]
+name = "emd-parser"
+description = "Decoder from code points to emd instructions"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[dependencies]
+emd-core = { path = "../emd-core" }
+
+[lints]
+workspace = true

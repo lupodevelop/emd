@@ -1,0 +1,19 @@
+[package]
+name = "emd-wasm"
+description = "The real parser and VM for the emd website, as WebAssembly"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+emd-core = { path = "../emd-core" }
+emd-parser = { path = "../emd-parser" }
+emd-tools = { path = "../emd-tools" }
+emd-vm = { path = "../emd-vm" }
+
+[lints]
+workspace = true
