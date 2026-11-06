@@ -46,5 +46,6 @@ const meta = pageMetadata({ root, pathname: Astro.url.pathname, title, descripti
   <meta name="citation_pdf_url" content={new URL(paper.pdfPath ?? 'paper/emd.pdf', root)} />
   <meta name="citation_public_url" content={meta.canonical} />
   <meta name="citation_language" content="en" />
+  {paper.doi && <meta name="citation_doi" content={paper.doi} />}
 </Fragment>}
 <script type="application/ld+json" is:inline set:html={meta.structuredData} />

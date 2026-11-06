@@ -6,6 +6,7 @@ type Paper = {
   author: string;
   orcid: string;
   date: string;
+  doi?: string;
   abstract: string;
   abstractText: string;
   html: string;

@@ -6,7 +6,7 @@ export const repository = 'https://github.com/lupodevelop/emd';
 export const author = { name: 'Daniele Scaratti', orcid: '0009-0008-3931-8821' };
 
 export type PageKind = keyof typeof cards;
-export type PaperMetadata = { title: string; author: string; orcid: string; date: string; abstractText?: string; pdfPath?: string; keywords?: string[] };
+export type PaperMetadata = { title: string; author: string; orcid: string; date: string; doi?: string; abstractText?: string; pdfPath?: string; keywords?: string[] };
 
 // Parse the publication date from the paper metadata.
 export function publicationDate(date: string): string {
@@ -79,6 +79,7 @@ export function pageMetadata({ root, pathname, title, description, kind, paper }
       '@type': 'ScholarlyArticle', '@id': `${canonical.href}#article`,
       name: paper.title, headline: paper.title, description,
       creativeWorkStatus: 'Preprint',
+      ...(paper.doi ? { identifier: { '@type': 'PropertyValue', propertyID: 'DOI', value: paper.doi }, sameAs: `https://doi.org/${paper.doi}` } : {}),
       ...(paper.abstractText ? { abstract: paper.abstractText } : {}),
       keywords: paper.keywords ?? ['programming languages', 'formal semantics', 'Lean', 'Rocq', 'compiler verification', 'bounded model checking'],
       url: canonical.href, image, inLanguage: 'en',

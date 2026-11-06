@@ -58,3 +58,12 @@ test('paper dates reject invalid or ambiguous values', () => {
     assert.throws(() => publicationDate(value));
   }
 });
+
+
+test('paper DOI is preserved in scholarly metadata when supplied', () => {
+  const paper = { title: 'A research paper', author: 'The author', orcid: '0009-0008-3931-8821', date: 'November 5, 2026', doi: '10.5281/zenodo.24011442' };
+  const meta = pageMetadata({ ...defaults, pathname: '/emd/paper/', kind: 'paper', paper });
+  const article = JSON.parse(meta.structuredData)['@graph'].find(node => node['@type'] === 'ScholarlyArticle');
+  assert.deepEqual(article.identifier, { '@type': 'PropertyValue', propertyID: 'DOI', value: paper.doi });
+  assert.equal(article.sameAs, `https://doi.org/${paper.doi}`);
+});
