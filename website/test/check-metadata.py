@@ -122,7 +122,18 @@ def main():
                 check(meta('citation_publication_date') == article.get('datePublished'), 'paper: citation date')
                 check(meta('citation_pdf_url') == root + papers[route], 'paper: citation PDF URL')
                 check(bool(meta('citation_author')), 'paper: citation author')
-                check('citation_doi' not in head.meta, 'paper: do not invent a DOI')
+                data_file = 'experiment.json' if route == 'paper/2/' else 'paper.json'
+                manuscript = json.loads((Path(__file__).resolve().parents[1] / 'src/data' / data_file).read_text())
+                doi = manuscript.get('doi')
+                if doi:
+                    check(meta('citation_doi') == doi, 'paper: citation DOI differs from manuscript')
+                    check(article.get('identifier') == {
+                        '@type': 'PropertyValue', 'propertyID': 'DOI', 'value': doi,
+                    }, 'paper: structured DOI differs from manuscript')
+                    check(article.get('sameAs') == f'https://doi.org/{doi}', 'paper: DOI link differs from manuscript')
+                else:
+                    check('citation_doi' not in head.meta and 'identifier' not in article,
+                          'paper: DOI supplied without manuscript metadata')
 
     sitemap = args.dist / 'sitemap.xml'
     check(sitemap.is_file(), 'Missing sitemap.xml')
