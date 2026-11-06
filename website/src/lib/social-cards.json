@@ -1,0 +1,47 @@
+{
+  "home": {
+    "label": "A PROGRAMMING LANGUAGE",
+    "headline": [
+      "Eight dashes.",
+      "A whole language."
+    ],
+    "detail": "32 instructions. Rust tools. A browser playground.",
+    "alt": "emd. Eight dashes. A whole language. 32 instructions, Rust tools and a browser playground."
+  },
+  "keyboard": {
+    "label": "THE INTERACTIVE KEYBOARD",
+    "headline": [
+      "Eight keys.",
+      "No mercy."
+    ],
+    "detail": "Write, decode and run emd in your browser.",
+    "alt": "emd keyboard. Eight keys. No mercy. Write, decode and run emd in your browser."
+  },
+  "manual": {
+    "label": "THE LANGUAGE MANUAL",
+    "headline": [
+      "The rules behind",
+      "the dashes."
+    ],
+    "detail": "The language, assembly, semantics and tools.",
+    "alt": "emd manual. The rules behind the dashes: language, assembly, semantics and tools."
+  },
+  "paper": {
+    "label": "THE RESEARCH PREPRINT",
+    "headline": [
+      "A language.",
+      "Its proofs and limits."
+    ],
+    "detail": "Lean and Rocq semantics. Checked implementations.",
+    "alt": "emd research preprint. A language, its proofs and limits: formal semantics and implementation verification."
+  },
+  "experiment": {
+    "label": "THE CLI EXPERIMENT",
+    "headline": [
+      "Can a machine",
+      "write it?"
+    ],
+    "detail": "Executable code. Opaque Unicode. Exact answers.",
+    "alt": "emd CLI experiment: language models generating executable code in a visually opaque Unicode language."
+  }
+}

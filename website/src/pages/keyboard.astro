@@ -1,0 +1,86 @@
+---
+import { url } from '../lib/site';
+import Base from '../layouts/Base.astro';
+import { alphabet, sourceLineMax } from '../lib/site';
+import { examples } from '../lib/examples';
+import instructions from '../lib/instructions.json';
+import { challenges } from '../lib/challenges';
+const families = [...new Set(instructions.map(i => i.family))];
+const pair = (keys: string) => [...keys].map(k => alphabet.find(a => a.key === k)!.glyph).join('');
+---
+<Base kind="keyboard" title="The keyboard — emd" description="Type emd with eight letters or a mouse, decode its Unicode dashes and run examples in your browser with the real parser and virtual machine.">
+  <main id="main" class="manual-main keyboard-page">
+    <a class="text-link" href={url('')}>← Back to the damage</a>
+    <div class="section-kicker">— THE KEYBOARD</div>
+    <h1>Eight keys.<br />None of them help.</h1>
+    <p>Type <code>a s d f g h j k</code> in the box, or use the buttons below.</p>
+
+    <section class="kb-challenge" id="challenges" aria-labelledby="challenge-heading">
+      <h2 id="challenge-heading">Make it do something.</h2>
+      <div class="kb-example-picker">
+        <label for="kb-challenge">Challenge</label>
+        <select id="kb-challenge">
+          <option value="">Free play</option>
+          {challenges.map(challenge => <option value={challenge.id}>{challenge.title}</option>)}
+        </select>
+      </div>
+      <div id="challenge-brief" hidden>
+        <p class="challenge-goal" id="challenge-goal"></p>
+        <details class="challenge-hint"><summary>A small hint</summary><p id="challenge-hint"></p></details>
+      </div>
+    </section>
+
+    <div class="kb-keys" role="group" aria-label="The eight dashes">
+      {alphabet.map(letter => <button class="kb-key" type="button" data-insert={letter.glyph} aria-label={`${letter.name}, U+${letter.code}, key ${letter.key}`}><kbd>{letter.key}</kbd><span class="kb-glyph">{letter.glyph}</span><small>{letter.code}</small></button>)}
+    </div>
+
+    <div class="kb-example-picker" id="kb-examples">
+      <label for="kb-example">Examples</label>
+      <select id="kb-example">{examples.map(example => <option value={example.name} data-input={example.input}>{example.title}</option>)}</select>
+      <button class="button primary" id="kb-load-example" type="button">Load example</button>
+      <a class="text-link" id="kb-example-assembly" href={url('examples/hello.asm')}>Read assembly ↗</a>
+    </div>
+
+    <label class="kb-label" for="kb-source">program.emd</label>
+    <textarea id="kb-source" class="kb-source" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-describedby="kb-source-help kb-input-status" rows="4" placeholder="asaddagf"></textarea>
+    <p class="kb-count" id="kb-source-help">Type a s d f g h j k or paste the eight emd dashes. Lines wrap after {sourceLineMax} code points; you can break earlier, even inside an instruction. Newlines are discarded before decoding. Spaces and other characters are rejected.</p>
+    <p class="kb-count" id="kb-input-status" role="status"></p>
+    <p class="kb-count" id="kb-count" role="status">0 dashes · 0 lines</p>
+
+    <div class="kb-actions">
+      <button class="button primary" id="kb-run" type="button" disabled>Run the dashes <span aria-hidden="true">→</span></button>
+      <button class="text-link" id="kb-stop" type="button" hidden>Stop</button>
+      <button class="text-link" id="kb-copy" type="button">Copy</button>
+      <button class="text-link" id="kb-download" type="button">Download .emd</button>
+      <button class="text-link" id="kb-clear" type="button">Clear</button>
+    </div>
+    <p class="kb-count" id="kb-runtime-status" role="status">Loading the runner…</p>
+
+    <section class="kb-result challenge-results" id="challenge-result" aria-label="Challenge results" hidden>
+      <p id="challenge-summary" role="status"></p>
+      <ol id="challenge-cases"></ol>
+    </section>
+
+    <div id="kb-stdin">
+      <label class="kb-label" for="kb-input">stdin</label>
+      <input id="kb-input" class="kb-input" type="text" spellcheck="false" autocomplete="off" />
+    </div>
+
+    <div class="kb-result" id="kb-result" aria-live="polite" hidden>
+      <p><span class="muted">status</span> <strong id="kb-status"></strong></p>
+      <p><span class="muted">stack</span> <code id="kb-stack"></code> <span class="muted">steps</span> <code id="kb-steps"></code></p>
+      <pre id="kb-output"></pre>
+    </div>
+
+    <ul class="kb-problems" id="kb-problems"></ul>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Decoded instructions"><table class="kb-decoded"><tbody id="kb-decoded"></tbody></table></div>
+
+    <h2>Instructions</h2>
+    <p>Two letters each, or one click.</p>
+    <div class="kb-families">
+      {families.map(family => <section><h3>{family}</h3><div class="kb-instructions">{instructions.filter(i => i.family === family).map(i => <button class="kb-instruction" type="button" data-insert={pair(i.keys)} aria-label={`${i.name}, keys ${i.keys}`}><span>{i.name}</span><kbd>{i.keys}</kbd></button>)}</div></section>)}
+    </div>
+    <p class="under-terminal">More in <a class="text-link" href={url('docs/tools/')}>Tools</a>: the same keyboard in Neovim, and a debugger that goes backward.</p>
+  </main>
+</Base>
+<script src="../scripts/keyboard.ts"></script>

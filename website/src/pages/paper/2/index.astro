@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ResearchPaper from '../../../components/ResearchPaper.astro';
+import { loadPaper } from '../../../lib/paper';
+import experiment from '../../../data/experiment.json' with { type: 'json' };
+const paper = { ...loadPaper(experiment), pdfPath: 'paper/2/experiment.pdf', keywords: ['language models', 'Unicode', 'code generation', 'CLI experiments', 'format adherence'] };
+---
+<Base kind="experiment" {paper} title={paper.title} description="A CLI case study of language models generating executable emd programs in a visually opaque Unicode language, with exact-answer scores, format repair and token-cost estimates.">
+  <ResearchPaper {paper} pdfPath={paper.pdfPath} relatedPath="paper/" relatedLabel="Paper 1 · Language and verification ↗" />
+</Base>

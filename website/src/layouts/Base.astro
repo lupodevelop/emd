@@ -1,0 +1,60 @@
+---
+import { url } from '../lib/site';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
+import '../styles/global.css';
+import { themes } from '../lib/site';
+import Metadata from '../components/Metadata.astro';
+import Brand from '../components/Brand.astro';
+import type { PageKind, PaperMetadata } from '../lib/metadata';
+interface Props { title?: string; description?: string; kind?: PageKind; paper?: PaperMetadata; noindex?: boolean }
+const { title, description, kind, paper, noindex } = Astro.props;
+---
+<!doctype html>
+<html lang="en" data-theme="ash">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <Metadata {title} {description} {kind} {paper} {noindex} />
+    <meta name="theme-color" content="#1b1820" />
+    <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
+    <link rel="apple-touch-icon" sizes="180x180" href={url('apple-touch-icon.png')} />
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('emd-theme');
+        if (['ash', 'matcha', 'ember', 'blueprint', 'paper'].includes(saved)) document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <canvas id="dash-field" aria-hidden="true"></canvas>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="small-brand" href={url('')} aria-label="emd home"><Brand /></a>
+        <nav aria-label="Main navigation">
+          <a href={url('#language')}>Language</a>
+          <a href={url('keyboard/')}>Keyboard</a>
+          <a href={url('docs/')}>Manual</a>
+          <a href={url('paper/')}>Paper</a>
+          <a href={url('#install')}>Get emd <span aria-hidden="true">↗</span></a>
+        </nav>
+      </header>
+      <slot />
+      <footer class="site-footer">
+        <div><a class="footer-brand" href={url('')} aria-label="emd home"><Brand /></a><p>All rights reserved. All lines horizontal.</p><small>MIT licensed. The damage is complimentary. <a class="room-entry" href={url("room/")} aria-label="An unmarked door">—</a></small></div>
+        <div class="footer-credit"><span>Created by <a href="https://github.com/lupodevelop">lupodevelop ↗</a></span><p>The lunatic behind <a href="https://github.com/lupodevelop/skeg">skeg</a><br />and a thousand other projects.</p><a href={url('#sponsors')}>Meet the enablers ↓</a></div>
+      </footer>
+    </div>
+    <aside class="theme-dock" aria-label="Color theme">
+      <span class="theme-label">Same damage. Different shade.</span>
+      <div class="theme-options">
+        {themes.map(theme => <button type="button" data-set-theme={theme.id} aria-label={`Use ${theme.name} theme`} aria-pressed="false" title={theme.name} style={`--swatch:${theme.color}`}><span></span></button>)}
+      </div>
+      <span class="theme-name" aria-live="polite">Ash</span>
+    </aside>
+    <script src="../scripts/site.ts"></script>
+    <script src="../scripts/dash-effects.ts"></script>
+    <script src="../scripts/word-damage.ts"></script>
+  </body>
+</html>

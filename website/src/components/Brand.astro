@@ -1,0 +1,8 @@
+---
+import logo from '../../../assets/logo-on-dark.svg?raw';
+---
+<span class="brand-mark" aria-hidden="true" set:html={logo.replace('stroke="#f0e9e0"', 'stroke="currentColor"')} />
+<style>
+  .brand-mark { display: block; width: var(--brand-width, 68px); color: var(--ink); }
+  .brand-mark :global(svg) { display: block; width: 100%; height: auto; }
+</style>

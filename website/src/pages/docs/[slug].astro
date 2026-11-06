@@ -1,0 +1,17 @@
+---
+import { url } from '../../lib/site';
+import Base from '../../layouts/Base.astro';
+import { manuals } from '../../lib/site';
+import { readFileSync } from 'node:fs';
+import { renderMarkdown } from '../../lib/markdown';
+import 'katex/dist/katex.min.css';
+export function getStaticPaths() {
+  return manuals.map(page => ({ params: { slug: page.slug }, props: page }));
+}
+const { slug, title, description } = Astro.props;
+const markdown = readFileSync(`${process.cwd()}/../docs/${slug}.md`, 'utf8');
+// Documentation is trusted, repository-owned content. Keep its links inside the site.
+const linked = markdown.replace(/\]\((?:\.\/)?([a-z-]+)\.md(?:#[^)]+)?\)/g, (_match, name) => `](/docs/${name}/)`).replace(/\]\(\/([^)]*)\)/g, (_match, path) => `](${url(path)})`);
+const html = renderMarkdown(linked).replaceAll('<table>', '<div class="table-scroll" tabindex="0" role="region" aria-label="Reference table"><table>').replaceAll('</table>', '</table></div>');
+---
+<Base kind="manual" title={`${title} — emd`} {description}><main id="main" class="manual-main"><a class="text-link" href={url('docs/')}>← The manual</a><article class="prose" set:html={html}></article></main></Base>

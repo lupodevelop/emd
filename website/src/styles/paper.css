@@ -1,0 +1,157 @@
+/* A single, measured reading column. Tables may use more of the page, while
+   the PDF retains the manuscript's two-column layout. */
+.research-main {
+  --reading-width: 42rem;
+  --paper-font: 'Source Serif 4', Charter, Georgia, 'Times New Roman', serif;
+  padding: 24px 0 72px;
+  background: var(--bg);
+}
+.paper-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 880px;
+  margin-inline: auto;
+  font: 400 12px/1.5 var(--font);
+}
+.research-paper { font: 400 18px/1.8 var(--paper-font); color: var(--ink); }
+.research-paper strong { font-weight: 600; }
+.research-header {
+  max-width: 880px;
+  margin: 44px auto 36px;
+  padding-bottom: 30px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+.research-header h1 {
+  margin: 0 0 28px;
+  font: 600 clamp(24px, 3.1vw, 32px)/1.32 var(--paper-font);
+  letter-spacing: -.015em;
+  text-wrap: balance;
+  overflow-wrap: normal;
+}
+.research-header p { color: var(--ink); margin: 0; }
+.research-author { font-size: 18px; }
+.research-header .research-status { margin-top: 9px; font: 400 10px/1.5 var(--font); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.research-header .research-affiliation { margin-top: 4px; font-size: 15px; font-style: italic; color: var(--muted); }
+.research-header .research-date { margin-top: 8px; font-size: 13px; color: var(--muted); }
+.research-orcid {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 13px;
+  color: var(--accent);
+  font: 400 11px/1.6 var(--font);
+}
+.research-orcid > span { border: 1px solid currentColor; border-radius: 50%; width: 21px; height: 21px; display: grid; place-items: center; font-size: 10px; }
+.research-abstract, .paper-contents, .research-body { max-width: var(--reading-width); margin-inline: auto; }
+.research-abstract { max-width: 46rem; margin-bottom: 3em; padding: 1.2em 1.6em; background: var(--surface); border-left: 3px solid var(--dim); }
+.research-abstract h2 { margin: 0 0 .6em; font: 600 13px/1.4 var(--paper-font); text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+.research-abstract p { margin: 0; font-size: 17px; line-height: 1.65; text-align: justify; hyphens: auto; color: var(--ink); }
+.paper-contents {
+  margin-bottom: 42px;
+  border-block: 1px solid var(--line);
+  padding: 0;
+  font: 400 12px/1.8 var(--font);
+}
+.paper-contents summary { padding: 14px 0; cursor: pointer; color: var(--muted); }
+.paper-contents summary:hover, .paper-contents a:hover { color: var(--accent); }
+.paper-contents ol { list-style: none; padding: 4px 0 17px 18px; margin: 0; }
+.paper-contents li { margin: 5px 0; }
+.paper-contents a { display: inline-block; padding-block: 2px; }
+.research-body { line-height: 1.8; }
+.research-body p { color: var(--ink); text-align: justify; hyphens: auto; margin: 0 0 .8em; }
+.research-body > p { text-indent: 1.2em; }
+.research-body > p:first-child,
+.research-body > h2 + p,
+.research-body > h3 + p,
+.research-body > h4 + p,
+.research-body > .paper-wide + p,
+.research-body > .paper-table + p,
+.research-body > ul + p,
+.research-body > ol + p { text-indent: 0; }
+.research-body h2, .research-body h3, .research-body h4 {
+  font-family: var(--paper-font);
+  text-align: left;
+  letter-spacing: 0;
+  line-height: 1.4;
+  break-after: avoid;
+  hyphens: none;
+}
+.research-body h2 { font-size: 23px; font-weight: 600; margin: 1.8em 0 .6em; }
+.research-body h3 { font-size: 19px; font-style: italic; font-weight: 600; margin: 1.3em 0 .45em; }
+.research-body h4 { font-size: 18px; font-weight: 600; margin: 1.4em 0 .6em; }
+.research-body > h2:first-child { margin-top: 0; }
+.research-body .numbered-heading { display: block; }
+.research-body .header-section-number { margin-right: .4em; color: var(--ink); font: inherit; font-variant-numeric: lining-nums; }
+.research-body .paper-heading-text { min-width: 0; }
+.research-body a { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.research-body a:hover { color: var(--ink); }
+.research-body li { padding-left: .25em; margin-bottom: .7em; }
+.research-body ol, .research-body ul { padding-left: 1.6em; margin: .5em 0 1.3em; }
+.research-body li p { text-indent: 0; margin: 0 0 .4em; }
+.research-body code { font-family: var(--font); font-size: .78em; overflow-wrap: anywhere; }
+.research-body pre { margin: 0; background: var(--surface); border: 1px solid var(--line); padding: 20px 24px; overflow-x: auto; line-height: 1.8; }
+.research-body pre code { overflow-wrap: normal; }
+.research-body .paper-wide { margin: 1.6em 0 1.8em; }
+.research-body .theorem, .research-body .definition { border-left: 2px solid var(--accent); background: var(--surface); padding: 20px 24px; font-size: 17px; line-height: 1.75; }
+.research-body .theorem p, .research-body .definition p { text-indent: 0; text-align: left; }
+.research-body .theorem p:last-child, .research-body .definition p:last-child { margin-bottom: 0; }
+.research-body .theorem em { font-style: normal; }
+.research-body .paper-table {
+  --table-width: min(880px, calc(100vw - 88px));
+  width: var(--table-width);
+  margin: 2em calc((100% - var(--table-width)) / 2);
+  overflow-x: auto;
+}
+.research-body table { border-collapse: collapse; width: 100%; font-size: 15px; line-height: 1.6; }
+.research-body th { font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--dim); background: var(--surface); }
+.research-body th, .research-body td { padding: 11px 13px; text-align: left; }
+.research-body td { border-bottom: 1px solid var(--line); vertical-align: top; }
+.research-body caption { text-align: left; padding: 0 0 14px; font-size: 14px; line-height: 1.6; color: var(--muted); }
+.research-body .table-number { color: var(--ink); }
+.research-body .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: .6em .15em; margin: 1.2em 0; }
+.research-body .katex { font-size: 1em; }
+.research-body .paper-references { padding-left: 1.8em; font-size: 15px; line-height: 1.7; }
+.research-body .paper-references li { padding-left: .4em; margin-bottom: 1em; }
+.research-body .paper-references p { text-indent: 0; overflow-wrap: anywhere; }
+.research-body [id] { scroll-margin-top: 28px; }
+.paper-toolbar-bottom { border-top: 1px solid var(--line); padding-top: 20px; margin-top: 55px; }
+@media (max-width: 720px) {
+  .research-main { padding-top: 15px; }
+  .research-header { margin-top: 30px; margin-bottom: 28px; padding-bottom: 26px; }
+  .research-header h1 { font-size: clamp(23px, 5.5vw, 29px); line-height: 1.35; text-wrap: pretty; }
+  .research-abstract { padding: 1em 1.2em; margin-bottom: 2em; }
+  .research-abstract p { text-align: left; hyphens: none; font-size: 16px; }
+  .research-paper { font-size: 17px; line-height: 1.75; }
+  .research-body > p { text-indent: 0; }
+  .research-body p { text-align: left; hyphens: none; }
+  .research-body h2 { font-size: 22px; }
+  .research-body h3 { font-size: 19px; }
+  .research-body .theorem, .research-body .definition { padding: 16px; font-size: 16px; }
+  .research-body .paper-table { width: 100%; margin-inline: 0; }
+  .research-body table { min-width: 580px; font-size: 14px; }
+  .research-body th, .research-body td { padding: 9px 11px; }
+  .research-body .katex-display { font-size: .87em; }
+  .research-body pre { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .research-main { scroll-behavior: auto; }
+}
+@media print {
+  #dash-field, .site-header, .site-footer, .theme-dock, .paper-toolbar, .paper-contents { display: none !important; }
+  body { background: white !important; color: black !important; }
+  .site-shell { width: 100%; }
+  .research-main { padding: 0; background: white; --reading-width: 100%; }
+  .research-paper { --ink: #111; --muted: #555; --accent: #333; --surface: #f6f6f6; --line: #bbb; color: #111; font-size: 11pt; }
+  .research-header h1 { font-size: 19pt; }
+  .research-body .paper-table { width: 100%; margin-inline: 0; overflow: visible; }
+  .research-body table { font-size: 9pt; min-width: 0; }
+  .research-body .theorem, .research-body .definition, .research-body tr { break-inside: avoid; }
+}
+
+.research-body figure { margin: 28px auto; max-width: var(--reading-width); }
+.research-body figcaption { margin-top: 10px; font-size: 14px; color: var(--muted); }
+.paper-figure { display: block; width: 100%; height: auto; color: var(--ink); }

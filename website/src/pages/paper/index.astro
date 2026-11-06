@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import ResearchPaper from '../../components/ResearchPaper.astro';
+import { loadPaper } from '../../lib/paper';
+const paper = loadPaper();
+---
+<Base kind="paper" {paper} title={paper.title} description="A preprint on emd: its language and mechanized semantics, compiler and virtual machine, and the scope and limits of verification.">
+  <ResearchPaper {paper} pdfPath="paper/emd.pdf" relatedPath="paper/2/" relatedLabel="Paper 2 · CLI experiment ↗" />
+</Base>

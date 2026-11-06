@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import { alphabet } from '../lib/site';
+---
+<Base title="The dash room — emd" description="Ten questions. Eight dashes. One questionable use of your time." kind="keyboard" noindex>
+  <main id="main" class="dash-room">
+    <header class="room-intro">
+      <p class="room-eyebrow">YOU FOUND THE UNMARKED DOOR.</p>
+      <h1>The dash room<span>.</span></h1>
+      <p>Ten questions. Eight dashes. No rescue team.</p>
+    </header>
+    <noscript>This room needs JavaScript to run your programs.</noscript>
+    <nav class="room-doors" aria-label="Challenge doors">
+      {Array.from({length: 10}, (_, i) => <button type="button" data-door={i} aria-label={`Door ${i + 1}`} aria-current={i === 0 ? 'step' : undefined} disabled={i > 0}>—</button>)}
+    </nav>
+    <section aria-labelledby="room-question" class="room-question">
+      <p class="room-eyebrow" id="room-number">DOOR 01 / 10</p>
+      <h2 id="room-question" tabindex="-1">Can you do absolutely nothing?</h2>
+      <p id="room-spec">Halt. Leave the stack empty. Produce no output.</p>
+    </section>
+    <div class="room-instrument">
+      <div class="room-dashes" role="group" aria-label="Insert a dash">
+        {alphabet.map(letter => <button type="button" data-dash={letter.glyph} aria-label={letter.name}>{letter.glyph}</button>)}
+      </div>
+      <label class="sr-only" for="room-source">Your emd program</label>
+      <textarea id="room-source" rows="6" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" aria-describedby="room-rules" dir="ltr"></textarea>
+      <p id="room-rules">Only dashes. Click them or type them. No paste.</p>
+    </div>
+    <div class="room-actions">
+      <button type="button" class="button primary" id="room-check">Try the door →</button>
+      <button type="button" class="text-link" id="room-stop" hidden>Stop</button>
+      <button type="button" class="text-link" id="room-clear">Clear</button>
+      <span id="room-size">0 dashes</span>
+    </div>
+    <p id="room-feedback" role="status" aria-live="polite"></p>
+    <ol id="room-tests" aria-label="Test results"></ol>
+    <button type="button" class="button primary" id="room-next" hidden>Next door →</button>
+    <section id="room-finished" hidden aria-labelledby="room-finished-title">
+      <p class="room-eyebrow">10 / 10</p>
+      <h2 id="room-finished-title" tabindex="-1">You could have learned a useful language.</h2>
+      <p>Instead, you did this. All ten doors are open.</p>
+    </section>
+    <p class="room-footnote">Progress stays in this browser.</p>
+  </main>
+</Base>
+<script src="../scripts/room.ts"></script>
+<style>
+  .dash-room { max-width: 740px; margin: 80px auto 110px; }
+  .room-intro h1 { font-size: clamp(36px, 7vw, 68px); letter-spacing: -.075em; line-height: 1.1; font-weight: 500; margin: 15px 0 22px; }
+  .room-intro h1 span { color: var(--accent); }
+  .room-eyebrow { font-size: 10px; letter-spacing: .13em; color: var(--dim); }
+  .room-doors { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; margin: 48px 0; }
+  .room-doors button { border: 1px solid var(--line); background: transparent; color: var(--dim); min-height: 44px; font-size: 24px; }
+  .room-doors button[aria-current] { border-color: var(--accent); color: var(--accent); background: var(--surface); }
+  .room-doors button[data-solved] { color: var(--accent); border-bottom: 3px solid var(--accent); }
+  .room-question { min-height: 175px; }
+  .room-question h2 { font-size: clamp(23px, 4vw, 32px); margin: 10px 0 16px; }
+  .room-question h2:focus { outline: none; }
+  .room-instrument { border: 1px solid var(--line); background: var(--surface); }
+  .room-dashes { display: grid; grid-template-columns: repeat(8, 1fr); border-bottom: 1px solid var(--line); }
+  .room-dashes button { min-width: 0; min-height: 68px; background: transparent; border: 0; border-right: 1px solid var(--line); font-size: 30px; font-family: var(--font); }
+  .room-dashes button:last-child { border-right: 0; }
+  .room-dashes button:hover { background: var(--accent); color: var(--bg); }
+  #room-source { display: block; width: 100%; resize: vertical; min-height: 180px; background: transparent; border: 0; color: var(--ink); padding: 24px; font: 22px/1.8 var(--font); letter-spacing: .08em; overflow-wrap: anywhere; white-space: pre-wrap; }
+  #room-rules { font-size: 10px; padding: 0 24px 16px; color: var(--dim); }
+  .room-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; margin-top: 24px; }
+  #room-size { margin-left: auto; font-size: 10px; color: var(--dim); }
+  #room-feedback { margin-top: 24px; min-height: 2em; }
+  #room-tests { display: flex; flex-wrap: wrap; gap: 12px 24px; padding: 0; list-style: none; font-size: 11px; color: var(--muted); }
+  #room-next { margin-top: 24px; }
+  #room-finished { border-top: 1px dashed var(--accent); margin-top: 48px; padding-top: 32px; }
+  #room-finished h2 { margin: 12px 0 20px; }
+  .room-footnote { margin-top: 50px; font-size: 10px; color: var(--dim); }
+  :global(body:has(.dash-room) .site-header nav), :global(body:has(.dash-room) .theme-dock) { display: none; }
+  @media (max-width: 600px) { .dash-room { margin-top: 48px; } .room-doors { gap: 4px; } .room-question { min-height: 210px; } .room-dashes button { min-height: 56px; } #room-source { padding: 16px; font-size: 19px; } }
+</style>

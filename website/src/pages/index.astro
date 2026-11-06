@@ -1,0 +1,96 @@
+---
+import { url } from '../lib/site';
+import Base from '../layouts/Base.astro';
+import { alphabet, sourceLineMax } from '../lib/site';
+import instructions from '../lib/instructions.json';
+import { readFileSync } from 'node:fs';
+import logo from '../../../assets/logo-on-dark.svg?raw';
+// From the working directory: import.meta.url points into dist/ during a build.
+const hello = readFileSync(`${process.cwd()}/../examples/hello.emd`, 'utf8');
+const glyphs = ['-', '‐', '‑', '‒', '–', '—', '―', '−'];
+const logoViewBox = logo.match(/viewBox="([^"]+)"/)![1];
+const logoPath = logo.match(/<path d="([^"]+)"/)![1];
+---
+<Base>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-meta"><span>A programming language. Allegedly.</span><span aria-hidden="true">UTF-8 / NO MERCY</span></div>
+      <h1 id="hero-title"><span class="sr-only">emd: emotional damage</span><button class="logo-control" type="button" aria-label="Disrupt the emd logo" title="Go on. Break it."><svg class="wordmark" viewBox={logoViewBox} stroke-width="11" aria-hidden="true"><defs><g id="emd-strokes"><path data-logo-path d={logoPath} /></g><clipPath id="glitch-slice"><path fill="white" stroke="none" d="M0 16H268V26H0ZM0 50H268V57H0ZM0 83H268V91H0Z" /></clipPath></defs><use href="#emd-strokes" class="logo-solid" /><use href="#emd-strokes" class="logo-ghost logo-ghost-a" clip-path="url(#glitch-slice)" /><use href="#emd-strokes" class="logo-ghost logo-ghost-b" clip-path="url(#glitch-slice)" /></svg><canvas id="dash-logo" aria-hidden="true"></canvas><span class="logo-crosshair crosshair-tl" aria-hidden="true">—</span><span class="logo-crosshair crosshair-br" aria-hidden="true">—</span><span class="logo-signal" aria-hidden="true">SIGNAL UNSTABLE / U+2014</span></button></h1>
+      <div class="hero-caption"><span>emotional damage<span class="blink" aria-hidden="true">_</span></span><span class="dash-eight" aria-hidden="true">- ‐ ‑ ‒ – — ― −</span></div>
+      <h2>AI loves em dashes.<br /><span>We made them executable.</span></h2>
+      <p class="hero-description">A formally specified, deliberately unreadable programming<br class="desktop-break" /> language written entirely in Unicode dashes.</p>
+      <div class="hero-actions"><a class="button primary" href="#playground">Witness the damage <span aria-hidden="true">↓</span></a><a class="text-link" href={url('docs/')}>Read the manual <span aria-hidden="true">↗</span></a></div>
+      <p class="hero-fine">No keywords. No identifiers. No mercy.</p>
+      <div class="horizon" aria-hidden="true">{Array.from({length: 9}, (_, row) => <div style={`--i:${row}`}>{Array.from({length: 65}, (_, col) => <span>{glyphs[(col * 3 + row * 5) % 8]}</span>)}</div>)}</div>
+      <div class="hero-baseline"><span>Looks like punctuation.</span><span>Unfortunately, it runs.</span></div>
+    </section>
+
+    <section id="language" class="language section-block">
+      <div class="section-kicker"><span aria-hidden="true">—</span> THE LANGUAGE</div>
+      <div class="section-heading"><h2>Eight dashes.<br />An unreasonable amount<br />of commitment.</h2><p>All programming languages have their quirks. Ours are indistinguishable.<br /><br />Two symbols make an instruction. One wrong code point makes a very different afternoon.</p></div>
+      <div class="alphabet" aria-label="The eight characters of emd">
+        {alphabet.map((letter, i) => <button class="glyph-card" type="button" data-glyph={i} aria-label={`${letter.name}, U+${letter.code}`} aria-pressed={i === 5 ? 'true' : 'false'}><span class="glyph-number">0{i}</span><span class="glyph-symbol">{letter.glyph}</span><span class="glyph-code">{letter.code}</span></button>)}
+      </div>
+      <div class="glyph-detail" aria-live="polite"><span><strong id="glyph-name">Em dash</strong><span class="muted" id="glyph-unicode"> / U+2014</span></span><span id="glyph-verdict">The reason we are all here.</span></div>
+      <div class="facts"><p><strong>{instructions.length}</strong><span>instructions.<br />Zero helpful names.</span></p><p><strong>{alphabet.length ** 2}</strong><span>possible pairs.<br />{alphabet.length ** 2 - instructions.length} ways to be wrong.</span></p><p><strong>0</strong><span>spaces allowed.<br />Not even at the end.</span></p></div>
+      <p class="layout-note">{sourceLineMax} code points per line. Break anywhere, even inside an instruction. Every newline disappears before decoding. <a class="text-link" href={url('docs/language-spec/')}>The layout means nothing ↗</a></p>
+    </section>
+
+    <section id="playground" class="section-block playground">
+      <div class="section-kicker"><span aria-hidden="true">—</span> SEE IT RUN</div>
+      <div class="section-heading"><h2>Yes, this is code.<br /><span class="muted">We checked.</span></h2><p>A tiny instruction walkthrough.<br />Four instructions. Eight characters.<br />One deeply unnecessary way to get three.</p></div>
+      <div class="terminal" id="demo-terminal" data-code-view="expanded">
+        <div class="terminal-bar"><span><span class="terminal-mark" aria-hidden="true">— — —</span> a perfectly normal program.emd</span><span>UTF-8</span></div>
+        <div class="code-view-toolbar"><span>Same code. Less personal space.</span><div class="code-view-switch" role="group" aria-label="Code layout"><button type="button" data-code-view-button="expanded" aria-pressed="true" aria-controls="demo-code">Expanded</button><button type="button" data-code-view-button="compact" aria-pressed="false" aria-controls="demo-code">Compact</button></div></div>
+        <div class="demo-code" id="demo-code" aria-label="PUSH 1, PUSH 2, ADD, HALT"><span data-instruction="0">-‐</span><span data-instruction="1">-‑</span><span data-instruction="2">‑-</span><span data-instruction="3">–‒</span></div>
+        <div class="instruction-labels" aria-hidden="true"><span>PUSH 1</span><span>PUSH 2</span><span>ADD</span><span>HALT</span></div>
+        <p class="code-view-note" id="code-view-note" role="status">One instruction per pair. Room to think.</p>
+        <div class="execution-state" aria-live="polite" aria-atomic="true"><span><span class="muted">stack</span> <strong id="stack">[ ]</strong></span><span id="execution-status">Ready to make a point.</span></div>
+        <div class="terminal-controls"><button class="button primary" id="run-demo" type="button">Run the dashes <span aria-hidden="true">→</span></button><button class="text-link" id="step-demo" type="button">Step</button><button class="text-link reset" id="reset-demo" type="button">Reset ↺</button></div>
+      </div>
+      <p class="under-terminal">Same energy as <code>1 + 2</code>. Considerably more Unicode. <a class="text-link" href={url('keyboard/?challenge=three#challenges')}>Your turn →</a></p>
+    </section>
+
+    <section class="hello section-block">
+      <div class="section-kicker"><span aria-hidden="true">—</span> HELLO, WORLD. GOODBYE, READABILITY.</div>
+      <div class="hello-grid"><div><h2>A familiar greeting.<br />An unfamiliar feeling.</h2><p>This is the actual Hello World program.<br />Not a texture. Not a corrupted font.</p><a class="text-link" href={url('examples/hello.emd')} download>Download the damage ↧</a></div><div class="hello-source"><code>{hello}</code><div class="hello-output"><span>stdout</span><strong>Hello, world!</strong></div></div></div>
+    </section>
+
+    <section id="tools" class="section-block">
+      <div class="section-kicker"><span aria-hidden="true">—</span> THE TOOLCHAIN</div>
+      <div class="section-heading"><h2>Unreasonable syntax.<br />Reasonable tools.</h2><p>An analyzer, a debugger that goes backward, a C backend and a Neovim studio.<br /><br />Unfortunately, we kept building.</p></div>
+      <div class="serious-rows">
+        <a href={url('docs/tools/')}><span class="row-mark">— ?</span><div><h3>Find trouble before you run it</h3><p>Static analysis tracks value sets, intervals, memory and branch relations across inputs. It rules out selected faults and tells you what remains unknown.</p><code>emd analyze examples/brainfuck.emd</code></div><span aria-hidden="true">↗</span></a>
+        <a href={url('docs/tools/')}><span class="row-mark">— ←</span><div><h3>Debug in both directions</h3><p>Step forward or backward, reverse-continue, set breakpoints and find the step that last wrote a memory cell.</p><code>emd debug examples/functions.emd</code></div><span aria-hidden="true">↗</span></a>
+        <a href={url('docs/tools/')}><span class="row-mark">— C</span><div><h3>Compile the damage to C</h3><p>Generate C with the VM's checked arithmetic, limits and faults. Your questionable program can become a native binary.</p><code>emd c examples/hello.emd &gt; hello.c</code></div><span aria-hidden="true">↗</span></a>
+        <a href={url('docs/tools/')}><span class="row-mark">— ▤</span><div><h3>A whole Neovim studio</h3><p>Source, instructions, analysis, stack, memory, output and a clickable keyboard in one workspace. Step, rewind or let it play.</p><code>:EmdStudio</code></div><span aria-hidden="true">↗</span></a>
+      </div>
+      <p class="tools-footnote">Also: profiles, control-flow graphs, a program reducer and <code>emd slop</code>, which tries to run the dashes hiding in your prose.</p>
+    </section>
+
+    <section class="serious section-block">
+      <div class="section-kicker"><span aria-hidden="true">—</span> THE SERIOUS BIT</div>
+      <div class="section-heading"><h2>A bad idea.<br />Precisely specified.</h2><p>The joke is the syntax.<br />The specification is quite serious.</p></div>
+      <div class="serious-rows"><a href={url('docs/isa/')}><span class="row-mark">——</span><div><h3>A real little machine</h3><p>A stack, indexed memory, arithmetic, conditional jumps, CALL and RET. Byte I/O and a Rust VM.</p></div><span aria-hidden="true">↗</span></a><a href={url('docs/verification/')}><span class="row-mark">— —</span><div><h3>Two formal models</h3><p>Lean 4 and Rocq. Determinism, layout and direct Turing universality are proved, on the models. The Rust is checked within bounds and against the models, not proved equal to them.</p></div><span aria-hidden="true">↗</span></a><a href={url('docs/assembly/')}><span class="row-mark">—‐—</span><div><h3>An escape hatch for humans</h3><p>Write readable assembly. Compile it to dashes. Pretend that makes it better.</p></div><span aria-hidden="true">↗</span></a><a href={url('keyboard/')}><span class="row-mark">‐—‐</span><div><h3>A keyboard, regrettably</h3><p>Eight letters, or a mouse. Type dashes and run them here, with the real VM.</p></div><span aria-hidden="true">↗</span></a></div>
+      <div class="paper-note"><span aria-hidden="true">[ — ]</span><p><strong>A semi-serious language. Two papers.</strong><br /><span class="muted">We have put the questionable decisions in writing.</span></p><div class="paper-note-links"><a class="text-link" href={url('paper/')}>Language and verification ↗</a><a class="text-link" href={url('paper/2/')}>CLI experiment ↗</a></div></div>
+    </section>
+
+    <section id="install" class="install section-block">
+      <div class="section-kicker"><span aria-hidden="true">—</span> MAKE QUESTIONABLE CHOICES</div>
+      <h2>Your terminal deserves<br />a little emotional damage.</h2>
+      <p>Prefer a prebuilt CLI? <a class="text-link" href="https://github.com/lupodevelop/emd/releases">Check releases for Linux, macOS and Windows ↗</a>. Packages include examples and the manual.</p>
+      <p>From a local checkout of the emd repository, with Rust installed:</p>
+      <div class="copy-command"><span class="prompt" aria-hidden="true">$</span><code id="install-command">cargo install --path crates/emd-cli</code><button data-copy="install-command" type="button" aria-label="Copy installation command">Copy <span aria-hidden="true">⧉</span></button></div>
+      <div class="install-next"><code><span class="muted">$</span> emd run examples/hello.emd</code><a class="text-link" href={url('docs/')}>Take it from the top ↗</a></div>
+      <p class="copy-feedback" id="copy-feedback" role="status"></p>
+    </section>
+
+    <section id="sponsors" class="sponsors section-block">
+      <div class="section-kicker"><span aria-hidden="true">—</span> THE ENABLERS</div>
+      <h2>Backed by people<br />who hate em dashes.</h2>
+      <p>Both of them are also me. This is a very independent operation.</p>
+      <div class="sponsor-logos"><a href="https://altumdream.com" class="sponsor"><img src={url('sponsors/altumdream.svg')} width="52" height="52" alt="" loading="lazy" /><span class="altum-wordmark">altumdream<span class="sponsor-domain">altumdream.com ↗</span></span></a><a href="https://amanitaproject.com" class="sponsor"><img src={url('sponsors/amanita.png')} width="64" height="64" alt="" loading="lazy" /><span class="amanita-wordmark">AMANITA<br />PROJECT<span class="sponsor-domain">amanitaproject.com ↗</span></span></a></div>
+      <p class="sponsor-aside">They asked for fewer em dashes. I built a compiler.</p>
+    </section>
+  </main>
+</Base>

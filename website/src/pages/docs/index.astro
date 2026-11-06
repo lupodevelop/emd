@@ -1,0 +1,17 @@
+---
+import { url } from '../../lib/site';
+import Base from '../../layouts/Base.astro';
+import { manuals } from '../../lib/site';
+---
+<Base kind="manual" title="The manual — emd" description="Learn emd: source format, instruction set, semantics, readable assembly, verification and tools. Write your first program in Neovim Studio.">
+  <main id="main" class="manual-main">
+    <a class="text-link" href={url('')}>← Back to the damage</a>
+    <div class="section-kicker">— THE MANUAL</div>
+    <h1>Read between the lines.<br />They are all we have.</h1>
+    <p>The actual language documentation, straight from the repository.</p>
+    <a class="text-link" href={url('paper/')}>Read the research paper ↗</a>
+    <p><a class="text-link" href={url('docs/studio/')}>Write your first program in Neovim Studio ↗</a>: exact letters, controls and expected results. Or <a class="text-link" href={url('keyboard/')}>load an example in the keyboard ↗</a>.</p>
+    <div class="manual-links">{manuals.map(page => <a href={url(`docs/${page.slug}/`)}><div><strong>{page.title}</strong><p>{page.description}</p></div><span aria-hidden="true">↗</span></a>)}</div>
+    <section class="prose"><h2>Getting started</h2><p>With Rust installed, run this from your local checkout of the emd repository:</p><pre><code>cargo install --path crates/emd-cli</code></pre><p>Run an example, inspect its code points, or decode it into readable instructions:</p><pre><code>{'emd run examples/hello.emd\nemd inspect examples/hello.emd\nemd disasm examples/hello.emd'}</code></pre><p>Prefer to write readable source? Compile the assembly first:</p><pre><code>{'emd asm examples/hello.asm > hello.emd\nemd run hello.emd'}</code></pre><p>Try the real example files: <a href={url('examples/hello.asm')} download>hello.asm</a> and <a href={url('examples/hello.emd')} download>hello.emd</a>.</p></section>
+  </main>
+</Base>

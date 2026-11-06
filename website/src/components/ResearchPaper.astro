@@ -1,0 +1,34 @@
+---
+import { url } from '../lib/site';
+import { publicationDate } from '../lib/metadata';
+import type { loadPaper } from '../lib/paper';
+import 'katex/dist/katex.min.css';
+import '@fontsource/source-serif-4/latin-400.css';
+import '@fontsource/source-serif-4/latin-400-italic.css';
+import '@fontsource/source-serif-4/latin-600.css';
+import '../styles/paper.css';
+interface Props {
+  paper: ReturnType<typeof loadPaper>;
+  pdfPath: string;
+  relatedPath: string;
+  relatedLabel: string;
+}
+const { paper, pdfPath, relatedPath, relatedLabel } = Astro.props;
+---
+<main id="main" class="research-main">
+    <div class="paper-toolbar"><a class="text-link" href={url('')}>← emd</a><a class="text-link" href={url(relatedPath)}>{relatedLabel}</a><a class="text-link" href={url(pdfPath)} download={pdfPath.split('/').at(-1)}>Download PDF ↧</a></div>
+    <article class="research-paper">
+      <header class="research-header">
+        <h1>{paper.title}</h1>
+        <p class="research-author">{paper.author}</p>
+        <p class="research-affiliation">Independent Researcher</p>
+        <p class="research-status">Preprint</p>
+        <p class="research-date"><time datetime={publicationDate(paper.date)}>{paper.date}</time></p>
+        <a class="research-orcid" href={`https://orcid.org/${paper.orcid}`} rel="author"><span aria-hidden="true">iD</span> {paper.orcid}</a>
+      </header>
+      <section class="research-abstract" aria-labelledby="abstract-heading"><h2 id="abstract-heading">Abstract</h2><div set:html={paper.abstract}></div></section>
+      <details class="paper-contents"><summary>Contents</summary><nav aria-label="Paper contents"><ol>{paper.toc.map(section => <li><a href={`#${section.id}`}>{section.title}</a></li>)}</ol></nav></details>
+      <div class="research-body" set:html={paper.html}></div>
+    </article>
+    <div class="paper-toolbar paper-toolbar-bottom"><a class="text-link" href="#main">↑ Back to the top</a><a class="text-link" href={url(pdfPath)} download={pdfPath.split('/').at(-1)}>Download PDF ↧</a></div>
+  </main>

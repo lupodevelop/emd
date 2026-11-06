@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <title>emd CLI experiment: language models generating executable code in a visually opaque Unicode language.</title>
+  <rect width="1200" height="630" fill="#1b1820"/>
+  <path d="M64 172H1136M64 552H1136" stroke="#52475e" stroke-width="2"/>
+  <svg x="64" y="40" width="268" height="99" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 267.5 99" role="img" aria-label="emd"><path d="M65.5 63.5A30 30 0 1 0 58.05 83.28M91 99V53.5A20 20 0 0 1 131 53.5V99M131 53.5A20 20 0 0 1 171 53.5V99M262 5.5V99M202 63.5A30 30 0 1 0 262 63.5A30 30 0 1 0 202 63.5M5.5 63.5H202" fill="none" stroke="#f0e9e0" stroke-width="11"/></svg>
+
+  <g font-family="Menlo, monospace">
+    <text x="1136" y="106" text-anchor="end" font-size="19" letter-spacing="2" fill="#bcace8">THE CLI EXPERIMENT</text>
+    <g fill="#f0e9e0" font-size="66" font-weight="bold" letter-spacing="-3"><text x="64" y="285">Can a machine</text><text x="64" y="370">write it?</text></g>
+    <text x="66" y="434" font-size="22" fill="#b5a9be">Executable code. Opaque Unicode. Exact answers.</text>
+    <text x="64" y="515" font-size="43" letter-spacing="15" fill="#bcace8">- ‐ ‑ ‒ – — ― −</text>
+    <text x="64" y="593" font-size="18" fill="#b5a9be">lupodevelop.github.io/emd</text>
+    <text x="1136" y="593" text-anchor="end" font-size="18" fill="#bcace8">EMOTIONAL DAMAGE.</text>
+  </g>
+</svg>
