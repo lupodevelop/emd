@@ -1,0 +1,46 @@
+# Outside the workspace: needs nightly. `cargo +nightly fuzz run <target>`.
+[package]
+name = "emd-fuzz"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+emd-core = { path = "../crates/emd-core" }
+emd-parser = { path = "../crates/emd-parser" }
+emd-vm = { path = "../crates/emd-vm" }
+emd-asm = { path = "../crates/emd-asm" }
+
+[workspace]
+
+[[bin]]
+name = "parse_bytes"
+path = "fuzz_targets/parse_bytes.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "doctor"
+path = "fuzz_targets/doctor.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "compile"
+path = "fuzz_targets/compile.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "vm"
+path = "fuzz_targets/vm.rs"
+test = false
+doc = false
+bench = false

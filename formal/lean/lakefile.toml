@@ -1,0 +1,22 @@
+name = "emd"
+defaultTargets = ["Emd", "emdref", "emdpush", "emdlower", "emdanalyze"]
+
+[[lean_lib]]
+name = "Emd"
+globs = ["Emd", "Emd.Universal", "Emd.Lowering", "Emd.Properties", "Emd.Turing", "Emd.Source", "Emd.Bounded", "Emd.Analyzer"]
+
+[[lean_exe]]
+name = "emdref"
+root = "RefMain"
+
+[[lean_exe]]
+name = "emdpush"
+root = "PushMain"
+
+[[lean_exe]]
+name = "emdlower"
+root = "LowerMain"
+
+[[lean_exe]]
+name = "emdanalyze"
+root = "AnalyzeMain"
